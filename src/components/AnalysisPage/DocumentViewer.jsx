@@ -320,16 +320,6 @@ const DocumentViewer = ({
                 )}
               </div>
             </div>
-            
-            {/* AI Disclaimer - Only show after response is complete */}
-            {!isAnimatingResponse && (animatedResponseContent || currentResponse) && (
-              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                <p className="text-xs text-amber-800 flex items-start">
-                  <span className="mr-2">⚠️</span>
-                  <span>AI can sometimes make mistakes. Please verify important information and use your professional judgment.</span>
-                </p>
-              </div>
-            )}
           </div>
           {needsHorizontalScroll && (
             <div className="sticky bottom-0 left-0 right-0 pt-2 bg-white z-10">
@@ -345,6 +335,15 @@ const DocumentViewer = ({
               >
                 <div style={{ width: `${scrollbarWidth}px`, height: '1px' }} />
               </div>
+            </div>
+          )}
+          
+          {/* AI Disclaimer - Only show after response is complete, at the very bottom */}
+          {!isAnimatingResponse && (animatedResponseContent || currentResponse) && (
+            <div className="mt-4 pt-4 border-t border-gray-200">
+              <p className="text-xs text-gray-600 text-center">
+                ⚠️ AI can sometimes make mistakes. Please verify important information and use your professional judgment.
+              </p>
             </div>
           )}
         </div>

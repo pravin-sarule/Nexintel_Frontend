@@ -375,18 +375,16 @@ const MindmapContainer = ({
         // Format 1: { success: true, data: { id, label, children } }
         if (response.data && (response.data.id || response.data.label !== undefined || response.data.children)) {
           setMindmapData(response);
-          setShowMindmap(true);
-          setSelectedMindmapMessageId('mindmap');
-          console.log('[MindmapContainer] ✅ Format 1: Loaded mindmap (data field with id/label/children)');
+          // Removed automatic showMindmap - user must manually open mindmap
+          console.log('[MindmapContainer] ✅ Format 1: Loaded mindmap (data field with id/label/children) - data stored but not shown');
           return;
         }
         
         // Format 2: Response itself is the mindmap data
         if (response.id || response.mindmap_id || response.mindmap_data || response.mindmap_json) {
           setMindmapData(response);
-          setShowMindmap(true);
-          setSelectedMindmapMessageId('mindmap');
-          console.log('[MindmapContainer] ✅ Format 2: Loaded mindmap (direct mindmap data)');
+          // Removed automatic showMindmap - user must manually open mindmap
+          console.log('[MindmapContainer] ✅ Format 2: Loaded mindmap (direct mindmap data) - data stored but not shown');
           return;
         }
         
@@ -396,9 +394,8 @@ const MindmapContainer = ({
           const dataToCheck = response.data;
           if (typeof dataToCheck === 'object' && (dataToCheck.id || dataToCheck.label || dataToCheck.children || dataToCheck.title)) {
             setMindmapData(response);
-            setShowMindmap(true);
-            setSelectedMindmapMessageId('mindmap');
-            console.log('[MindmapContainer] ✅ Format 3: Loaded mindmap (data field with mindmap-like structure)');
+            // Removed automatic showMindmap - user must manually open mindmap
+            console.log('[MindmapContainer] ✅ Format 3: Loaded mindmap (data field with mindmap-like structure) - data stored but not shown');
             return;
           }
         }
@@ -414,9 +411,8 @@ const MindmapContainer = ({
               console.log('[MindmapContainer] Full mindmap by ID response:', fullMindmap);
               if (fullMindmap && (fullMindmap.data || fullMindmap.id || fullMindmap.mindmap_id)) {
                 setMindmapData(fullMindmap);
-                setShowMindmap(true);
-                setSelectedMindmapMessageId('mindmap');
-                console.log('[MindmapContainer] ✅ Format 4: Successfully loaded full mindmap by ID:', mindmapId);
+                // Removed automatic showMindmap - user must manually open mindmap
+                console.log('[MindmapContainer] ✅ Format 4: Successfully loaded full mindmap by ID:', mindmapId, '- data stored but not shown');
                 return;
               }
             } catch (err) {
@@ -434,9 +430,8 @@ const MindmapContainer = ({
               const fieldData = response[field];
               if (fieldData.id || fieldData.label || fieldData.children || fieldData.title) {
                 setMindmapData(response);
-                setShowMindmap(true);
-                setSelectedMindmapMessageId('mindmap');
-                console.log(`[MindmapContainer] ✅ Format 5: Loaded mindmap from field: ${field}`);
+                // Removed automatic showMindmap - user must manually open mindmap
+                console.log(`[MindmapContainer] ✅ Format 5: Loaded mindmap from field: ${field} - data stored but not shown`);
                 return;
               }
             }
@@ -448,9 +443,8 @@ const MindmapContainer = ({
         if (typeof response === 'object' && response !== null && !Array.isArray(response)) {
           console.log('[MindmapContainer] ⚠️ Trying fallback: Using response as-is even if format is unexpected');
           setMindmapData(response);
-          setShowMindmap(true);
-          setSelectedMindmapMessageId('mindmap');
-          console.log('[MindmapContainer] ✅ Fallback: Set mindmap data (will let MindmapViewer handle parsing)');
+          // Removed automatic showMindmap - user must manually open mindmap
+          console.log('[MindmapContainer] ✅ Fallback: Set mindmap data (will let MindmapViewer handle parsing) - data stored but not shown');
           return;
         }
         
@@ -493,29 +487,29 @@ const MindmapContainer = ({
   };
 
   // Auto-load mindmap when sessionId changes (for past chats)
-  // This ensures mindmaps load automatically when opening past chat sessions from any source
-  useEffect(() => {
-    if (sessionId && fileId) {
-      console.log('[MindmapContainer] 🔄 useEffect triggered - SessionId or fileId changed, auto-loading mindmap:', { 
-        sessionId, 
-        fileId
-      });
-      
-      // Load mindmap when we have both sessionId and fileId
-      // Use a delay to ensure state is fully updated, especially after fetchChatHistory
-      const timer = setTimeout(() => {
-        console.log('[MindmapContainer] ⏰ Timer fired, calling loadMindmapsForSession');
-        loadMindmapsForSession(fileId, sessionId);
-      }, 500); // Delay to ensure fetchChatHistory completes first
-      
-      return () => {
-        console.log('[MindmapContainer] 🧹 Cleaning up mindmap load timer');
-        clearTimeout(timer);
-      };
-    } else {
-      console.log('[MindmapContainer] ⏸️ Skipping mindmap load - missing sessionId or fileId:', { sessionId, fileId });
-    }
-  }, [sessionId, fileId]);
+  // DISABLED: Removed automatic mindmap loading to prevent popup during response generation
+  // useEffect(() => {
+  //   if (sessionId && fileId) {
+  //     console.log('[MindmapContainer] 🔄 useEffect triggered - SessionId or fileId changed, auto-loading mindmap:', { 
+  //       sessionId, 
+  //       fileId
+  //     });
+  //     
+  //     // Load mindmap when we have both sessionId and fileId
+  //     // Use a delay to ensure state is fully updated, especially after fetchChatHistory
+  //     const timer = setTimeout(() => {
+  //       console.log('[MindmapContainer] ⏰ Timer fired, calling loadMindmapsForSession');
+  //       loadMindmapsForSession(fileId, sessionId);
+  //     }, 500); // Delay to ensure fetchChatHistory completes first
+  //     
+  //     return () => {
+  //       console.log('[MindmapContainer] 🧹 Cleaning up mindmap load timer');
+  //       clearTimeout(timer);
+  //     };
+  //   } else {
+  //     console.log('[MindmapContainer] ⏸️ Skipping mindmap load - missing sessionId or fileId:', { sessionId, fileId });
+  //   }
+  // }, [sessionId, fileId]);
 
   // Handle mindmap generation callback
   const handleMindmapGenerated = (data, error, loading) => {
@@ -524,10 +518,11 @@ const MindmapContainer = ({
     }
     if (data !== undefined) {
       setMindmapData(data);
-      if (data) {
-        setShowMindmap(true);
-        setSelectedMindmapMessageId('mindmap');
-      }
+      // Removed automatic showMindmap - user must manually open mindmap after generation
+      // if (data) {
+      //   setShowMindmap(true);
+      //   setSelectedMindmapMessageId('mindmap');
+      // }
     }
     if (error !== undefined) {
       setMindmapError(error);

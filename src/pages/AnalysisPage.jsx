@@ -2721,8 +2721,8 @@ import MessagesList from '../components/AnalysisPage/MessageList';
 import DocumentList from '../components/AnalysisPage/DocumentList';
 import DocumentViewer from '../components/AnalysisPage/DocumentViewer';
 import ProgressStagesPopup from '../components/AnalysisPage/ProgressStagesPopup';
-import MindmapContainer from '../components/AnalysisPage/MindmapContainer';
-import MindmapViewer from '../components/AnalysisPage/MindmapViewer';
+// import MindmapContainer from '../components/AnalysisPage/MindmapContainer';
+// import MindmapViewer from '../components/AnalysisPage/MindmapViewer';
 import {
   Search,
   Send,
@@ -2979,12 +2979,12 @@ const AnalysisPage = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showToolsDropdown, setShowToolsDropdown] = useState(false);
 
-  // Mindmap state
-  const [showMindmap, setShowMindmap] = useState(false);
-  const [selectedMindmapMessageId, setSelectedMindmapMessageId] = useState(null);
-  const [mindmapData, setMindmapData] = useState(null);
-  const [isGeneratingMindmap, setIsGeneratingMindmap] = useState(false);
-  const [mindmapError, setMindmapError] = useState(null);
+  // Mindmap state - COMMENTED OUT: Mindmap feature disabled
+  // const [showMindmap, setShowMindmap] = useState(false);
+  // const [selectedMindmapMessageId, setSelectedMindmapMessageId] = useState(null);
+  // const [mindmapData, setMindmapData] = useState(null);
+  // const [isGeneratingMindmap, setIsGeneratingMindmap] = useState(false);
+  // const [mindmapError, setMindmapError] = useState(null);
 
   // Secrets state
   const [secrets, setSecrets] = useState([]);
@@ -4427,8 +4427,8 @@ const AnalysisPage = () => {
     setSelectedMessageId(message.id);
     setCurrentResponse(message.answer);
     showResponseImmediately(message.answer);
-    setShowMindmap(false);
-    setSelectedMindmapMessageId(null);
+    // setShowMindmap(false);
+    // setSelectedMindmapMessageId(null);
    
     // If message has a file_id, verify and update the document processing status
     // Messages can only exist if document was processed, so set status to processed
@@ -4495,11 +4495,11 @@ const AnalysisPage = () => {
     setSelectedMessageId(null);
     setActiveDropdown('Custom Query');
     // Clear mindmap state for new session
-    setShowMindmap(false);
-    setSelectedMindmapMessageId(null);
-    setMindmapData(null);
-    setIsGeneratingMindmap(false);
-    setMindmapError(null);
+    // setShowMindmap(false);
+    // setSelectedMindmapMessageId(null);
+    // setMindmapData(null);
+    // setIsGeneratingMindmap(false);
+    // setMindmapError(null);
     const newSessionId = `session-${Date.now()}`;
     setSessionId(newSessionId);
     setSuccess('New chat session started!');
@@ -5563,8 +5563,8 @@ const AnalysisPage = () => {
               </div>
             )}
             
-            {/* Mindmap Container */}
-            <div className="flex-1 overflow-y-auto px-3 py-1.5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
+            {/* Mindmap Container - COMMENTED OUT: Mindmap feature disabled */}
+            {/* <div className="flex-1 overflow-y-auto px-3 py-1.5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
               <div className="space-y-1.5">
                 <MindmapContainer
                   fileId={fileId}
@@ -5586,6 +5586,10 @@ const AnalysisPage = () => {
                     setSelectedMessageId(null);
                   }}
                 />
+            </div>
+            </div> */}
+            <div className="flex-1 overflow-y-auto px-3 py-1.5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
+              <div className="space-y-1.5">
                 <MessagesList
               messages={messages}
               selectedMessageId={selectedMessageId}
@@ -5722,13 +5726,14 @@ const AnalysisPage = () => {
           <div className="w-full lg:w-3/5 flex flex-col h-2/3 lg:h-full bg-gray-50">
             <div className="flex-1 p-2 sm:p-4 min-h-0">
               <div className="h-full">
-                {showMindmap && selectedMindmapMessageId === 'mindmap' ? (
+                {/* Mindmap Viewer - COMMENTED OUT: Mindmap feature disabled */}
+                {/* {showMindmap && selectedMindmapMessageId === 'mindmap' ? (
                   <MindmapViewer 
                     mindmapData={mindmapData} 
                     apiBaseUrl={API_BASE_URL}
                     getAuthToken={getAuthToken}
                   />
-                ) : (
+                ) : ( */}
                   <DocumentViewer
                     selectedMessageId={selectedMessageId}
                     currentResponse={currentResponse}
@@ -5742,7 +5747,7 @@ const AnalysisPage = () => {
                     markdownComponents={markdownComponents}
                     responseContainerRef={responseRef}
                   />
-                )}
+                {/* )} */}
               </div>
             </div>
           </div>

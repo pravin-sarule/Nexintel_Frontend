@@ -750,7 +750,7 @@ const Sidebar = () => {
 
  const navigationItems = [
  { name: 'Dashboard', path: '/dashboard', icon: ChartBarIcon },
- { name: 'Projects', path: '/documents', icon: DocumentTextIcon },
+ { name: 'Projects', icon: DocumentTextIcon },
  { name: 'ICOM', path: '/analysis', icon: MagnifyingGlassCircleIcon },
  { name: 'Chats', path: '/chats', icon: MessageSquare, isSpecial: true },
  { name: 'Document Drafting', icon: PencilSquareIcon },
@@ -828,6 +828,7 @@ const Sidebar = () => {
  const Icon = item.icon;
  const active = isActive(item.path);
  const isChats = item.name === 'Chats';
+ const hasPath = item.path && item.path !== undefined;
  return (
  <div key={item.name}>
  {isChats ? (
@@ -845,7 +846,7 @@ const Sidebar = () => {
  />
  <span className={`${isSidebarCollapsed && !isMobileView ? 'hidden' : 'inline'} transition-all duration-200`}>{item.name}</span>
  </Link>
- ) : (
+ ) : hasPath ? (
  <Link
  to={item.path}
  className={`group flex items-center w-full ${isSidebarCollapsed && !isMobileView ? 'justify-center px-3' : 'px-4'} py-3 text-sm rounded-xl transition-all duration-200 ${
@@ -860,6 +861,16 @@ const Sidebar = () => {
  />
  <span className={`${isSidebarCollapsed && !isMobileView ? 'hidden' : 'inline'} transition-all duration-200`}>{item.name}</span>
  </Link>
+ ) : (
+ <div
+ className={`group flex items-center w-full ${isSidebarCollapsed && !isMobileView ? 'justify-center px-3' : 'px-4'} py-3 text-sm rounded-xl transition-all duration-200 text-gray-400 cursor-default`}
+ title={isSidebarCollapsed && !isMobileView ? item.name : undefined}
+ >
+ <Icon
+ className={`h-5 w-5 ${isSidebarCollapsed && !isMobileView ? '' : 'mr-3'} transition-colors duration-200 text-gray-500`}
+ />
+ <span className={`${isSidebarCollapsed && !isMobileView ? 'hidden' : 'inline'} transition-all duration-200`}>{item.name}</span>
+ </div>
  )}
  </div>
  );

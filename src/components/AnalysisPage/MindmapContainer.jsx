@@ -584,28 +584,7 @@ const MindmapContainer = ({
         </div>
       )}
 
-      {/* Mindmap Item in Messages List */}
-      <div
-        onClick={handleMindmapItemClick}
-        className={`p-2 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
-          showMindmap && selectedMindmapMessageId === 'mindmap'
-            ? 'bg-[#E0F7F6] border-[#21C1B6] shadow-sm'
-            : 'bg-white border-gray-200 hover:bg-gray-50'
-        }`}
-      >
-        <div className="flex items-start justify-between">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center space-x-2 mb-0.5">
-              <Network className="h-3 w-3 text-[#21C1B6] flex-shrink-0" />
-              <p className="text-xs font-medium text-gray-900">Generate Mind Map</p>
-            </div>
-            <p className="text-xs text-gray-500">Visualize document relationships</p>
-          </div>
-          {showMindmap && selectedMindmapMessageId === 'mindmap' && (
-            <ChevronRight className="h-3 w-3 text-[#21C1B6] flex-shrink-0 ml-1.5" />
-          )}
-        </div>
-      </div>
+      {/* Mindmap Item in Messages List - Removed per user request */}
     </>
   );
 };

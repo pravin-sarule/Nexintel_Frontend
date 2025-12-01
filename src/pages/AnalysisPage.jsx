@@ -4123,14 +4123,14 @@ const AnalysisPage = () => {
       'image/jpeg',
       'image/tiff',
     ];
-    const maxSize = 300 * 1024 * 1024;
+    const maxSize = 100 * 1024 * 1024; // 100 MB
     const validFiles = files.filter((file) => {
       if (!allowedTypes.includes(file.type)) {
         setError(`File "${file.name}" has an unsupported type.`);
         return false;
       }
       if (file.size > maxSize) {
-        setError(`File "${file.name}" is too large (max 300MB).`);
+        setError(`File "${file.name}" is too large. You can upload only up to 100 MB.`);
         return false;
       }
       return true;
@@ -5415,36 +5415,6 @@ const AnalysisPage = () => {
                     </div>
                   )}
                 </div>
-                <div className="relative flex-shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setShowToolsDropdown(!showToolsDropdown)}
-                    disabled={isLoading || isGeneratingInsights || !fileId}
-                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                    title="Tools"
-                  >
-                    <Wrench className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="hidden sm:inline">Tools</span>
-                    <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
-                  </button>
-                  {showToolsDropdown && (
-                    <div className="absolute bottom-full left-0 mb-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setShowMindmap(true);
-                          setShowToolsDropdown(false);
-                          setShowSplitView(true);
-                          setSelectedMindmapMessageId('mindmap');
-                        }}
-                        className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg flex items-center space-x-2"
-                      >
-                        <Network className="h-4 w-4" />
-                        <span>Mindmap</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
                 <input
                   type="text"
                   value={chatInput}
@@ -5702,36 +5672,6 @@ const AnalysisPage = () => {
                         ) : (
                           <div className="px-4 py-2.5 text-sm text-gray-500">No analysis prompts available</div>
                         )}
-                      </div>
-                    )}
-                  </div>
-                  <div className="relative flex-shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setShowToolsDropdown(!showToolsDropdown)}
-                      disabled={isLoading || isGeneratingInsights || !fileId}
-                      className="flex items-center space-x-1 px-2 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      title="Tools"
-                    >
-                      <Wrench className="h-3 w-3" />
-                      <span>Tools</span>
-                      <ChevronDown className="h-3 w-3" />
-                    </button>
-                    {showToolsDropdown && (
-                      <div className="absolute bottom-full left-0 mb-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setShowMindmap(true);
-                            setShowToolsDropdown(false);
-                            setSelectedMindmapMessageId('mindmap');
-                            setSelectedMessageId(null);
-                          }}
-                          className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg flex items-center space-x-2"
-                        >
-                          <Network className="h-4 w-4" />
-                          <span>Mindmap</span>
-                        </button>
                       </div>
                     )}
                   </div>

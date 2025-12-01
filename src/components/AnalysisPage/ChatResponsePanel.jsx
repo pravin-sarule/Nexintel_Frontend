@@ -1832,6 +1832,16 @@ const ChatResponsePanel = ({
  </div>
 </div>
  </div>
+ 
+ {/* AI Disclaimer - Only show after response is complete */}
+ {!isAnimatingResponse && !isLoading && !isGeneratingInsights && (animatedResponseContent || currentResponse) && (
+ <div className="mt-6 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+ <p className="text-xs text-amber-800 flex items-start">
+ <span className="mr-2">⚠️</span>
+ <span>AI can sometimes make mistakes. Please verify important information and use your professional judgment.</span>
+ </p>
+ </div>
+ )}
  </div>
  </div>
  ) : (

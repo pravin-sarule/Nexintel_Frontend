@@ -4123,14 +4123,14 @@ const AnalysisPage = () => {
       'image/jpeg',
       'image/tiff',
     ];
-    const maxSize = 100 * 1024 * 1024; // 100 MB
+    const maxSize = 200 * 1024 * 1024; // 200 MB
     const validFiles = files.filter((file) => {
       if (!allowedTypes.includes(file.type)) {
         setError(`File "${file.name}" has an unsupported type.`);
         return false;
       }
       if (file.size > maxSize) {
-        setError(`File "${file.name}" is too large. You can upload only up to 100 MB.`);
+        setError(`File "${file.name}" is too large. You can upload only up to 200 MB.`);
         return false;
       }
       return true;
